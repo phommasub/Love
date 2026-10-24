@@ -4,523 +4,899 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ขอเป็นแฟนกับสาว 💖</title>
-    <!-- Tailwind CSS CDN -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Kanit & Prompt -->
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Canvas Confetti Library -->
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    
+    <!-- Google Fonts: Prompt & Mitr -->
+    <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@400;500;600&family=Prompt:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        romantic: {
-                            50: '#fff1f2',
-                            100: '#ffe4e6',
-                            200: '#fecdd3',
-                            300: '#fda4af',
-                            400: '#fb7185',
-                            500: '#f43f5e',
-                            600: '#e11d48',
-                        }
+                        'love-pink': '#FF85A1',
+                        'love-soft': '#FFE5EC',
+                        'love-deep': '#FF0B55',
+                        'love-gold': '#FFD700',
+                        'love-purple': '#9D4EDD'
                     },
                     fontFamily: {
-                        kanit: ['Kanit', 'sans-serif'],
                         prompt: ['Prompt', 'sans-serif'],
+                        mitr: ['Mitr', 'sans-serif'],
+                    },
+                    animation: {
+                        'bounce-slow': 'bounce 2s infinite',
+                        'float': 'float 3s ease-in-out infinite',
+                        'pulse-glow': 'pulseGlow 1.5s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-12px)' },
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { filter: 'drop-shadow(0 0 15px rgba(255, 11, 85, 0.6))' },
+                            '50%': { filter: 'drop-shadow(0 0 30px rgba(255, 133, 161, 0.9))' },
+                        }
                     }
                 }
             }
         }
     </script>
+
     <style>
         body {
             font-family: 'Prompt', sans-serif;
             user-select: none;
+            -webkit-user-select: none;
             overflow-x: hidden;
-            background: linear-gradient(135deg, #ffe4e6 0%, #fff1f2 50%, #fecdd3 100%);
+            background: linear-gradient(135deg, #FFF0F5 0%, #FFE4E1 50%, #FFC0CB 100%);
             min-height: 100vh;
         }
 
-        /* Floating Hearts Particles */
+        /* Floating Heart Particle Style */
         .heart-particle {
             position: fixed;
             pointer-events: none;
-            animation: floatUp 2s ease-out forwards;
             z-index: 9999;
+            animation: floatUpAndFade 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+            font-size: 24px;
         }
 
-        @keyframes floatUp {
+        @keyframes floatUpAndFade {
             0% {
                 opacity: 1;
                 transform: translate(-50%, -50%) scale(0.6) rotate(0deg);
             }
             50% {
-                transform: translate(calc(-50% + (var(--rand-x) * 1px)), calc(-100px - (var(--rand-y) * 1px))) scale(1.2) rotate(var(--rand-deg));
+                transform: translate(calc(-50% + (var(--dx) * 1px)), calc(-100px + (var(--dy) * 1px))) scale(1.3) rotate(var(--rot));
             }
             100% {
                 opacity: 0;
-                transform: translate(calc(-50% + (var(--rand-x) * 1.5px)), calc(-200px - (var(--rand-y) * 1.5px))) scale(0.8) rotate(calc(var(--rand-deg) * 2));
+                transform: translate(calc(-50% + (var(--dx) * 2px)), -220px) scale(0.8) rotate(calc(var(--rot) * 2));
             }
         }
 
-        /* Envelope Flap Animations */
-        .envelope-wrapper {
-            perspective: 1000px;
+        /* Polaroid Photo Frame Effect */
+        .polaroid {
+            background: white;
+            padding: 12px 12px 24px 12px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            transform: rotate(-2deg);
+            transition: all 0.3s ease;
         }
-        .envelope {
-            position: relative;
-            transition: transform 0.6s ease;
-        }
-        .envelope.open .flap {
-            transform: rotateX(180deg);
-            z-index: 1;
-        }
-        .flap {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 50%;
-            background-color: #fda4af;
-            transform-origin: top;
-            transition: transform 0.6s ease;
-            z-index: 3;
-            border-bottom: 2px solid #fb7185;
-            clip-path: polygon(0 0, 100% 0, 50% 100%);
+        .polaroid:hover {
+            transform: rotate(0deg) scale(1.03);
+            box-shadow: 0 20px 30px -10px rgba(255, 11, 85, 0.3);
         }
 
-        /* Heart Fill Mask Animation */
-        .heart-mask {
-            clip-path: path('M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z');
+        /* Strict Page Display Control to Prevent Overlays */
+        .page {
+            display: none !important;
+            opacity: 0;
+            transition: opacity 0.4s ease-in-out;
+            width: 100%;
+        }
+        .page.active {
+            display: flex !important;
+            opacity: 1;
         }
 
-        /* Custom Scrollbar for Gallery */
-        .custom-scrollbar::-webkit-scrollbar {
-            height: 8px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-            background: #ffe4e6;
-            border-radius: 10px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #fda4af;
-            border-radius: 10px;
+        /* Canvas Signature Styling */
+        canvas.sig-pad {
+            touch-action: none;
+            background-color: #FFF5F7;
+            border: 2px dashed #FF85A1;
+            border-radius: 12px;
+            cursor: crosshair;
         }
 
-        /* Glassmorphism Effect */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-        }
-
-        /* Print Style Fixes for Certificate */
+        /* Print styles for Certificate */
         @media print {
-            body * {
-                visibility: hidden;
-            }
-            #print-area, #print-area * {
-                visibility: visible;
-            }
-            #print-area {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
+            body {
+                background: white !important;
             }
             .no-print {
                 display: none !important;
             }
+            #page-7 {
+                display: block !important;
+                box-shadow: none !important;
+                border: 4px solid #FF85A1 !important;
+                padding: 20px !important;
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FFE5EC;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #FF85A1;
+            border-radius: 10px;
         }
     </style>
 </head>
-<body class="relative flex flex-col items-center justify-center min-h-screen p-4" onclick="createHeartEffect(event)">
+<body class="relative flex flex-col justify-between items-center min-h-screen text-slate-800 antialiased overflow-x-hidden">
 
-    <!-- Audio Player (Floating Controller) -->
-    <div class="fixed top-4 right-4 z-50 flex items-center gap-2 bg-white/90 backdrop-blur-md px-4 py-2 rounded-full shadow-lg border border-pink-200" onclick="event.stopPropagation()">
-        <button id="bgm-toggle-btn" onclick="toggleAudio()" class="text-pink-500 hover:text-pink-600 transition text-lg">
-            <i id="bgm-icon" class="fas fa-music animate-spin" style="animation-duration: 3s;"></i>
-        </button>
-        <span class="text-xs text-pink-600 font-medium hidden sm:inline" id="bgm-status">เพลงรักของเรา 💕</span>
-        <label for="audio-upload" class="cursor-pointer text-xs bg-pink-100 hover:bg-pink-200 text-pink-600 px-2.5 py-1 rounded-full transition border border-pink-300">
-            <i class="fas fa-upload mr-1"></i>เปลี่ยนเพลง
-        </label>
-        <input type="file" id="audio-upload" accept="audio/*" class="hidden" onchange="loadCustomAudio(event)">
-        <audio id="bgm-audio" loop>
-            <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=sweet-love-115283.mp3" type="audio/mpeg">
+    <!-- FLOATING BGM AUDIO PLAYER CONTROLLER -->
+    <div class="fixed top-4 right-4 z-50 flex items-center gap-2 bg-white/80 backdrop-blur-md border border-pink-300 rounded-full px-3 py-1.5 shadow-lg no-print">
+        <audio id="bgm-audio" loop preload="auto">
+            <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=romantic-love-112188.mp3" type="audio/mpeg">
         </audio>
+        
+        <button id="bgm-toggle-btn" onclick="toggleAudio()" class="w-8 h-8 rounded-full bg-pink-500 hover:bg-pink-600 text-white flex items-center justify-center transition shadow">
+            <i id="bgm-icon" class="fa-solid fa-music text-xs"></i>
+        </button>
+        
+        <label class="cursor-pointer text-xs font-semibold text-pink-600 hover:text-love-deep transition flex items-center gap-1 border-l border-pink-200 pl-2">
+            <i class="fa-solid fa-upload"></i>
+            <span class="hidden sm:inline">เปลี่ยนเพลง</span>
+            <input type="file" id="audio-upload-input" accept="audio/*" class="hidden" onchange="loadCustomAudio(event)">
+        </label>
     </div>
 
-    <!-- Main Dynamic Screen Container -->
-    <div id="app-container" class="w-full max-w-md sm:max-w-xl transition-all duration-500">
-        <!-- Content will be rendered dynamically by JavaScript -->
+    <!-- Ambient Floating Emojis -->
+    <div class="fixed inset-0 pointer-events-none opacity-20 z-0 overflow-hidden no-print">
+        <div class="absolute top-10 left-10 text-4xl animate-bounce-slow">💖</div>
+        <div class="absolute top-1/4 right-12 text-3xl animate-float">🌸</div>
+        <div class="absolute bottom-20 left-16 text-5xl animate-float" style="animation-delay: 1s;">✨</div>
+        <div class="absolute bottom-1/3 right-10 text-4xl animate-bounce-slow" style="animation-delay: 1.5s;">💕</div>
+        <div class="absolute top-1/3 left-1/2 text-3xl animate-float" style="animation-delay: 0.5s;">🌹</div>
     </div>
 
-    <!-- Notification Modal Popup (Custom Alert / Modal) -->
-    <div id="custom-modal" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-        <div class="bg-white rounded-3xl p-6 max-w-xs sm:max-w-sm w-full text-center shadow-2xl border-4 border-pink-300 transform transition-all scale-100">
-            <div id="modal-icon" class="text-5xl mb-3">🔔</div>
-            <h3 id="modal-title" class="text-xl font-bold text-pink-600 mb-2">แจ้งเตือน</h3>
-            <p id="modal-message" class="text-gray-600 text-sm mb-5">ข้อความแจ้งเตือน</p>
-            <button id="modal-action-btn" onclick="closeModal()" class="w-full py-2.5 bg-gradient-to-r from-pink-400 to-rose-400 text-white font-bold rounded-full shadow-md hover:from-pink-500 hover:to-rose-500 transition">
-                ตกลง 💕
-            </button>
+    <!-- MAIN CONTAINER -->
+    <main class="relative z-10 w-full max-w-2xl px-4 py-8 my-auto flex flex-col justify-center items-center min-h-screen">
+
+        <!-- ================= STEP 1: FILL HEART WITH LOVE ================= -->
+        <section id="page-1" class="page active flex-col items-center justify-center text-center">
+            <div class="bg-white/80 backdrop-blur-md border-2 border-pink-200 rounded-3xl p-6 md:p-8 shadow-2xl w-full flex flex-col items-center">
+                <span class="inline-block px-4 py-1.5 bg-pink-100 text-love-deep font-semibold rounded-full text-sm mb-4">
+                    ✨ แตะที่หน้าจอหรือหัวใจเพื่อเติมความรัก ✨
+                </span>
+                <h1 class="text-2xl md:text-3xl font-bold font-mitr text-love-deep mb-2">
+                    เติมหัวใจให้เต็มดวงนะงับ 💕
+                </h1>
+                <p class="text-slate-600 text-sm mb-6">แตะ 1 ครั้ง = เติมความรัก +2% (แตะให้ครบ 100%)</p>
+
+                <div id="heart-tap-area" class="relative cursor-pointer my-4 transform transition active:scale-95 hover:scale-105 select-none" onclick="addLove()">
+                    <svg class="w-64 h-64 md:w-72 md:h-72 drop-shadow-xl" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#FFFFFF" stroke="#FF85A1" stroke-width="1.5"/>
+                    </svg>
+
+                    <div id="heart-fill-mask" class="absolute bottom-0 left-0 w-full overflow-hidden transition-all duration-300 pointer-events-none" style="height: 0%;">
+                        <svg class="w-64 h-64 md:w-72 md:h-72 absolute bottom-0 left-0 animate-pulse-glow" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="url(#love-gradient)"/>
+                            <defs>
+                                <linearGradient id="love-gradient" x1="0%" y1="100%" x2="0%" y2="0%">
+                                    <stop offset="0%" stop-color="#FF0B55" />
+                                    <stop offset="100%" stop-color="#FF85A1" />
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+
+                    <div class="absolute inset-0 flex flex-col items-center justify-center text-love-deep font-bold text-3xl font-mitr drop-shadow-md pointer-events-none">
+                        <span id="love-percent-text">0%</span>
+                        <span class="text-xs font-normal text-slate-500 mt-1">กดตรงนี้เลย! 👇</span>
+                    </div>
+                </div>
+
+                <div class="w-full max-w-md bg-slate-100 rounded-full h-4 mt-4 overflow-hidden border border-pink-200 shadow-inner">
+                    <div id="love-progress-bar" class="bg-gradient-to-r from-pink-400 to-love-deep h-full w-0 transition-all duration-200 rounded-full"></div>
+                </div>
+                <p class="text-xs text-pink-500 mt-2 font-medium">กดสะสมพลังรักให้ครบ 50 ครั้งนะงับ 💖</p>
+            </div>
+        </section>
+
+        <!-- ================= LOADING SCREEN ================= -->
+        <section id="page-loading" class="page flex-col items-center justify-center text-center">
+            <div class="bg-white/90 backdrop-blur-md border-2 border-pink-200 rounded-3xl p-10 shadow-2xl flex flex-col items-center">
+                <div class="relative w-24 h-24 mb-6">
+                    <i class="fa-solid fa-heart text-6xl text-love-deep animate-ping absolute inset-0 flex items-center justify-center opacity-75"></i>
+                    <i class="fa-solid fa-heart text-6xl text-love-deep relative z-10 animate-bounce"></i>
+                </div>
+                <h2 class="text-2xl font-bold font-mitr text-love-deep mb-2">รักเต็มหัวใจแล้วววว! 💖</h2>
+                <p class="text-slate-600 text-sm mb-4">กำลังเปิดประตูเข้าสู่หัวใจของคุณ...</p>
+                <div class="w-48 bg-pink-100 h-2 rounded-full overflow-hidden">
+                    <div class="bg-love-deep h-full animate-pulse w-full"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= STEP 2: PASSCODE SCREEN ================= -->
+        <section id="page-2" class="page flex-col items-center justify-center text-center">
+            <div class="bg-white/85 backdrop-blur-md border-2 border-pink-200 rounded-3xl p-6 md:p-8 shadow-2xl w-full flex flex-col items-center">
+                <div class="text-4xl mb-2">🔐💖</div>
+                <h2 class="text-2xl font-bold font-mitr text-love-deep mb-1">กรอกรหัสผ่านหัวใจ</h2>
+                <p class="text-slate-600 text-sm mb-6">ไขรหัสลับเพื่อเข้าสู่ความทรงจำของเรา</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center w-full mb-6">
+                    <div class="flex flex-col items-center">
+                        <div class="polaroid w-52 relative group">
+                            <img id="passcode-img" src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=600&q=80" alt="Love Frame" class="w-full h-48 object-cover rounded">
+                            <p class="text-center text-slate-700 font-mitr mt-3 text-sm">เจ้าความรัก 🌸</p>
+                            
+                            <label class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-white text-xs cursor-pointer rounded p-2">
+                                <i class="fa-solid fa-camera text-xl mb-1"></i>
+                                เปลี่ยนรูปโพลารอยด์
+                                <input type="file" class="hidden" accept="image/*" onchange="previewImage(event, 'passcode-img')">
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col items-center md:items-start w-full">
+                        <div class="bg-pink-50/80 border border-pink-200 rounded-2xl p-4 w-full text-center md:text-left mb-4">
+                            <p class="text-xs text-pink-600 font-semibold mb-1">💡 คำใบ้รหัสผ่าน:</p>
+                            <p class="text-sm text-slate-700 font-medium">“วันเกิดของคุณ (หรือรหัสผ่าน: 1234)”</p>
+                        </div>
+
+                        <label class="block text-xs font-medium text-slate-500 mb-1">ป้อนรหัสผ่าน 4 หลัก:</label>
+                        <input type="password" id="passcode-input" maxlength="8" placeholder="กรอกรหัสผ่านตรงนี้" class="w-full px-4 py-3 text-center md:text-left text-lg font-bold text-slate-800 bg-white border-2 border-pink-300 rounded-xl focus:outline-none focus:border-love-deep shadow-sm mb-3 tracking-widest">
+
+                        <button onclick="checkPasscode()" class="w-full py-3 bg-gradient-to-r from-pink-500 to-love-deep hover:from-pink-600 hover:to-red-600 text-white font-bold rounded-xl shadow-lg transform transition active:scale-95 flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-key"></i> ยืนยันรหัสผ่าน
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Passcode Success Modal -->
+        <div id="passcode-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+            <div class="bg-white rounded-3xl p-6 md:p-8 max-w-sm w-full text-center border-4 border-pink-300 shadow-2xl">
+                <div class="text-5xl mb-3">🎉💖✨</div>
+                <h3 class="text-2xl font-bold font-mitr text-love-deep mb-2">รหัสผ่านถูกต้อง!</h3>
+                <p class="text-slate-700 text-base font-medium mb-6">"รหัสผ่านถูกต้อง ที่รักเก่งที่สุดเลยค้าบ 💕"</p>
+                <button onclick="closeModal('passcode-modal'); goToPage(3);" class="w-full py-3 bg-love-deep text-white font-bold rounded-xl shadow-lg hover:bg-red-600 transition">
+                    ไปดูความทรงจำกันเลย 🚀
+                </button>
+            </div>
         </div>
-    </div>
 
-    <script>
-        // State Management
-        let currentStep = 1;
-        let heartLoveFill = 0; // Out of 100
-        let audioPlaying = false;
+        <!-- ================= STEP 3: LOVE TIMELINE GALLERY ================= -->
+        <section id="page-3" class="page flex-col items-center justify-center text-center">
+            <div class="bg-white/85 backdrop-blur-md border-2 border-pink-200 rounded-3xl p-4 md:p-8 shadow-2xl w-full">
+                <span class="px-4 py-1 bg-pink-100 text-love-deep font-semibold rounded-full text-xs">
+                    📸 TIMELINE MEMORIES
+                </span>
+                <h2 class="text-2xl md:text-3xl font-bold font-mitr text-love-deep mt-2 mb-1">ความทรงจำของเรา 💕</h2>
+                <p class="text-slate-600 text-xs md:text-sm mb-6">เรื่องราวความรักตั้งแต่เริ่มคุยกันมางับ</p>
 
-        // Dynamic Image Paths (ชี้ไปที่โฟลเดอร์ images/ สำหรับ Cloudflare Pages)
-        const appImages = {
-            polaroid: 'images/polaroid.jpg',
-            timeline: [
-                'images/timeline-1.jpg',
-                'images/timeline-2.jpg',
-                'images/timeline-3.jpg',
-                'images/timeline-4.jpg',
-                'images/timeline-5.jpg'
-            ],
-            question: 'images/question.jpg',
-            rose: 'images/rose.jpg',
-            gif: 'images/gif.gif',
-            cert1: 'images/cert-1.jpg',
-            cert2: 'images/cert-2.jpg'
-        };
+                <div class="relative border-l-2 border-pink-300 ml-4 md:ml-32 space-y-8 my-6 text-left">
+                    <!-- Item 1 -->
+                    <div class="relative pl-6">
+                        <div class="absolute -left-3 top-1 w-6 h-6 bg-love-deep rounded-full border-4 border-white shadow flex items-center justify-center text-white text-xs">1</div>
+                        <div class="bg-pink-50 border border-pink-200 rounded-2xl p-3 md:p-4 shadow-sm hover:shadow-md transition">
+                            <span class="text-xs font-bold text-pink-500">วันแรกที่เราได้คุยกัน 💬</span>
+                            <div class="my-2 relative group overflow-hidden rounded-xl h-40 bg-pink-100">
+                                <img id="timeline-1-img" src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover">
+                                <label class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white text-xs cursor-pointer">
+                                    <i class="fa-solid fa-pen mr-1"></i> เปลี่ยนรูป
+                                    <input type="file" class="hidden" accept="image/*" onchange="previewImage(event, 'timeline-1-img')">
+                                </label>
+                            </div>
+                            <p class="text-xs md:text-sm text-slate-700">จุดเริ่มต้นของความรู้สึกดีๆ ที่มีให้กันทุกวัน 😊</p>
+                        </div>
+                    </div>
 
-        // Fallback Unsplash Placeholders (หากไม่พบไฟล์ใน Cloudflare)
-        const fallbackImages = {
-            polaroid: 'https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=500&auto=format&fit=crop',
-            timeline: [
-                'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=500&auto=format&fit=crop',
-                'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=500&auto=format&fit=crop',
-                'https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?w=500&auto=format&fit=crop',
-                'https://images.unsplash.com/photo-1494774157365-9e04c6720e47?w=500&auto=format&fit=crop',
-                'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&auto=format&fit=crop'
-            ],
-            question: 'https://images.unsplash.com/photo-1518895949257-7621c3c786d7?w=500&auto=format&fit=crop',
-            rose: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&auto=format&fit=crop',
-            gif: 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Yyb2s5cGtqYmxsYXZ6Z3psdWg3OGdya3dkeGFiOG8ybWV3d2F5MCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/L3X9GvEGEYBSRlq4fg/giphy.gif',
-            cert1: 'https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=300&auto=format&fit=crop',
-            cert2: 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=300&auto=format&fit=crop'
-        };
+                    <!-- Item 2 -->
+                    <div class="relative pl-6">
+                        <div class="absolute -left-3 top-1 w-6 h-6 bg-pink-400 rounded-full border-4 border-white shadow flex items-center justify-center text-white text-xs">2</div>
+                        <div class="bg-pink-50 border border-pink-200 rounded-2xl p-3 md:p-4 shadow-sm hover:shadow-md transition">
+                            <span class="text-xs font-bold text-pink-500">เดตแรกและการเจอกัน ☕️</span>
+                            <div class="my-2 relative group overflow-hidden rounded-xl h-40 bg-pink-100">
+                                <img id="timeline-2-img" src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover">
+                                <label class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white text-xs cursor-pointer">
+                                    <i class="fa-solid fa-pen mr-1"></i> เปลี่ยนรูป
+                                    <input type="file" class="hidden" accept="image/*" onchange="previewImage(event, 'timeline-2-img')">
+                                </label>
+                            </div>
+                            <p class="text-xs md:text-sm text-slate-700">วันที่ตื่นเต้นที่สุด แต่ก็มีความสุขมากๆ เลยงับ ✨</p>
+                        </div>
+                    </div>
 
-        // Evasive Mobile Button Error Messages
-        const mobileErrorList = [
-            "ไม่พบคำตอบนี้ในระบบ",
-            "ยังจะเลือกคำตอบนี้อีกหรอ",
-            "กำลังทดสอบระบบหรอจ๊ะ",
-            "ไม่ให้เลือกคำตอบนี้หรอกจ้ะ",
-            "ถ้ายังเลือกอีกโดนแน่!!",
-            "หน่ะ!! ยังจะเลือกอีก",
-            "เตือนละนะ",
-            "พอละหมดมุกละ ยอมผมเถอะครับ",
-            "ไปกดอนุมัติได้แล้วววว"
-        ];
-        let mobileErrorIndex = 0;
+                    <!-- Item 3 -->
+                    <div class="relative pl-6">
+                        <div class="absolute -left-3 top-1 w-6 h-6 bg-love-deep rounded-full border-4 border-white shadow flex items-center justify-center text-white text-xs">3</div>
+                        <div class="bg-pink-50 border border-pink-200 rounded-2xl p-3 md:p-4 shadow-sm hover:shadow-md transition">
+                            <span class="text-xs font-bold text-pink-500">รอยยิ้มของคุณที่ชอบที่สุด 😄</span>
+                            <div class="my-2 relative group overflow-hidden rounded-xl h-40 bg-pink-100">
+                                <img id="timeline-3-img" src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover">
+                                <label class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white text-xs cursor-pointer">
+                                    <i class="fa-solid fa-pen mr-1"></i> เปลี่ยนรูป
+                                    <input type="file" class="hidden" accept="image/*" onchange="previewImage(event, 'timeline-3-img')">
+                                </label>
+                            </div>
+                            <p class="text-xs md:text-sm text-slate-700">แค่ได้เห็นเธอยิ้ม ก็ทำให้วันแย่ๆ สดใสขึ้นมาทันที 🌸</p>
+                        </div>
+                    </div>
 
-        // Handle Image Loading Fallbacks
-        function handleImgError(element, fallbackKey, index = null) {
-            if (index !== null) {
-                element.src = fallbackImages[fallbackKey][index];
-            } else {
-                element.src = fallbackImages[fallbackKey];
-            }
-        }
+                    <!-- Item 4 -->
+                    <div class="relative pl-6">
+                        <div class="absolute -left-3 top-1 w-6 h-6 bg-pink-400 rounded-full border-4 border-white shadow flex items-center justify-center text-white text-xs">4</div>
+                        <div class="bg-pink-50 border border-pink-200 rounded-2xl p-3 md:p-4 shadow-sm hover:shadow-md transition">
+                            <span class="text-xs font-bold text-pink-500">ผ่านเรื่องราวไปด้วยกัน 🤝</span>
+                            <div class="my-2 relative group overflow-hidden rounded-xl h-40 bg-pink-100">
+                                <img id="timeline-4-img" src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover">
+                                <label class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white text-xs cursor-pointer">
+                                    <i class="fa-solid fa-pen mr-1"></i> เปลี่ยนรูป
+                                    <input type="file" class="hidden" accept="image/*" onchange="previewImage(event, 'timeline-4-img')">
+                                </label>
+                            </div>
+                            <p class="text-xs md:text-sm text-slate-700">ขอบคุณที่คอยซัพพอร์ตและอยู่ข้างๆ กันเสมอนะงับ ❤️</p>
+                        </div>
+                    </div>
 
-        // Floating Hearts Interactive Particles
-        function createHeartEffect(e) {
-            const heartCount = 3;
-            const emojis = ['💖', '💕', '💗', '💓', '❤️', '🌸', '✨'];
-            for (let i = 0; i < heartCount; i++) {
-                const heart = document.createElement('div');
-                heart.className = 'heart-particle text-xl select-none';
-                heart.innerText = emojis[Math.floor(Math.random() * emojis.length)];
-                heart.style.left = e.clientX + 'px';
-                heart.style.top = e.clientY + 'px';
+                    <!-- Item 5 -->
+                    <div class="relative pl-6">
+                        <div class="absolute -left-3 top-1 w-6 h-6 bg-love-deep rounded-full border-4 border-white shadow flex items-center justify-center text-white text-xs">5</div>
+                        <div class="bg-pink-50 border border-pink-200 rounded-2xl p-3 md:p-4 shadow-sm hover:shadow-md transition">
+                            <span class="text-xs font-bold text-pink-500">ปัจจุบันและตลอดไป 💍</span>
+                            <div class="my-2 relative group overflow-hidden rounded-xl h-40 bg-pink-100">
+                                <img id="timeline-5-img" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover">
+                                <label class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white text-xs cursor-pointer">
+                                    <i class="fa-solid fa-pen mr-1"></i> เปลี่ยนรูป
+                                    <input type="file" class="hidden" accept="image/*" onchange="previewImage(event, 'timeline-5-img')">
+                                </label>
+                            </div>
+                            <p class="text-xs md:text-sm text-slate-700">อยากมีเธออยู่ในทุกช่วงเวลาของชีวิตเลยงับ 💖</p>
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="showModal('timeline-notif-modal')" class="w-full py-3.5 bg-gradient-to-r from-pink-500 to-love-deep hover:from-pink-600 hover:to-red-600 text-white font-bold rounded-2xl shadow-lg transition transform active:scale-95 text-base">
+                    อ่านครบแล้วจ้า ✨
+                </button>
+            </div>
+        </section>
+
+        <!-- System Pop-up Notification -->
+        <div id="timeline-notif-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+            <div class="bg-white rounded-2xl overflow-hidden max-w-sm w-full border-2 border-pink-400 shadow-2xl">
+                <div class="bg-gradient-to-r from-pink-400 to-love-deep px-4 py-2 flex justify-between items-center text-white font-bold text-xs">
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid fa-desktop"></i>
+                        <span>SYSTEM NOTIFICATION</span>
+                    </div>
+                    <div class="flex gap-1">
+                        <span class="w-3 h-3 bg-yellow-300 rounded-full inline-block"></span>
+                        <span class="w-3 h-3 bg-red-400 rounded-full inline-block"></span>
+                    </div>
+                </div>
+                <div class="p-6 text-center">
+                    <div class="text-4xl mb-3 animate-bounce">😉✨</div>
+                    <h4 class="text-xl font-bold font-mitr text-slate-800 mb-2">เริ่มมีใจหรือยังจ๊ะ ?</h4>
+                    <p class="text-xs text-slate-500 mb-6">ระบบทำการตรวจจับความรู้สึกหวานเกิน 100%</p>
+                    <button onclick="closeModal('timeline-notif-modal'); goToPage(4);" class="w-full py-3 bg-love-deep hover:bg-red-600 text-white font-bold rounded-xl shadow-md transition flex items-center justify-center gap-2">
+                        ไปกันต่อ ✨ <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= STEP 4: CUTE QUESTION ================= -->
+        <section id="page-4" class="page flex-col items-center justify-center text-center">
+            <div class="bg-white/85 backdrop-blur-md border-2 border-pink-200 rounded-3xl p-6 md:p-8 shadow-2xl w-full flex flex-col items-center">
+                <div class="relative mb-4 w-60 h-60 rounded-3xl overflow-hidden border-4 border-pink-300 shadow-lg group">
+                    <img id="q-img" src="https://images.unsplash.com/photo-1518895949257-7621c3c786d7?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover">
+                    <label class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex flex-col items-center justify-center text-white text-xs cursor-pointer">
+                        <i class="fa-solid fa-camera text-xl mb-1"></i> เปลี่ยนรูป
+                        <input type="file" class="hidden" accept="image/*" onchange="previewImage(event, 'q-img')">
+                    </label>
+                </div>
+
+                <h2 class="text-2xl md:text-3xl font-bold font-mitr text-love-deep mb-6 animate-pulse">
+                    HEY BABY รักเค้ามั้ยงับ 🥺💕
+                </h2>
+
+                <div class="flex flex-row justify-center items-center gap-6 w-full max-w-xs">
+                    <button onclick="goToPage(5)" class="flex-1 py-4 bg-gradient-to-r from-pink-500 to-love-deep hover:scale-110 text-white font-bold rounded-2xl shadow-xl transition transform active:scale-95 flex flex-col items-center justify-center gap-1">
+                        <i class="fa-solid fa-heart text-3xl"></i>
+                        <span class="text-sm">รักที่สุด ❤️</span>
+                    </button>
+
+                    <button onclick="showModal('not-love-modal')" class="flex-1 py-4 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold rounded-2xl shadow-md transition transform active:scale-95 flex flex-col items-center justify-center gap-1">
+                        <i class="fa-solid fa-xmark text-3xl text-slate-500"></i>
+                        <span class="text-sm">ไม่รัก ❌</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- "Not Love" Modal -->
+        <div id="not-love-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+            <div class="bg-white rounded-3xl p-6 md:p-8 max-w-sm w-full text-center border-4 border-pink-300 shadow-2xl">
+                <div class="text-6xl mb-3">🥺💔</div>
+                <h3 class="text-xl font-bold font-mitr text-love-deep mb-2">ไม่รักเค้าจริงหรอ?</h3>
+                <p class="text-slate-600 text-sm mb-6">เค้าไม่น่ารักตรงไหนงับ... ลองกดตอบใหม่อีกทีน้า 😭</p>
+                <button onclick="closeModal('not-love-modal')" class="w-full py-3 bg-pink-500 hover:bg-pink-600 text-white font-bold rounded-xl shadow-md transition">
+                    👈 ย้อนกลับไปตอบใหม่
+                </button>
+            </div>
+        </div>
+
+        <!-- ================= STEP 5: BOUQUET & ENVELOPE ================= -->
+        <section id="page-5" class="page flex-col items-center justify-center text-center">
+            <div class="bg-white/85 backdrop-blur-md border-2 border-pink-200 rounded-3xl p-6 md:p-8 shadow-2xl w-full flex flex-col items-center">
+                <h2 class="text-xl md:text-2xl font-bold font-mitr text-love-deep mb-2 leading-relaxed">
+                    เค้ารักเธอมากที่สุดดดดดเลยงับ 💕
+                </h2>
+                <p class="text-pink-600 font-medium text-sm md:text-base mb-6">
+                    เค้าให้ดอกไม้สำหรับคนสวยยยงับ 🌹✨
+                </p>
+
+                <div class="relative w-56 h-56 md:w-64 md:h-64 my-2 flex items-center justify-center">
+                    <img id="bouquet-img" src="https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover rounded-3xl shadow-xl border-4 border-pink-200">
+                    <label class="absolute inset-0 bg-black/40 opacity-0 hover:opacity-100 transition flex flex-col items-center justify-center text-white text-xs cursor-pointer rounded-3xl">
+                        <i class="fa-solid fa-camera text-2xl mb-1"></i> เปลี่ยนรูปช่อดอกไม้
+                        <input type="file" class="hidden" accept="image/*" onchange="previewImage(event, 'bouquet-img')">
+                    </label>
+                </div>
+
+                <div class="mt-8 flex flex-col items-center cursor-pointer group" onclick="goToPage(6)">
+                    <div class="relative text-6xl md:text-7xl animate-bounce-slow transform transition group-hover:scale-125">
+                        ✉️
+                        <span class="absolute -top-1 -right-1 flex h-4 w-4">
+                          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-love-deep opacity-75"></span>
+                          <span class="relative inline-flex rounded-full h-4 w-4 bg-love-deep"></span>
+                        </span>
+                    </div>
+                    <p class="text-xs font-bold text-pink-600 mt-2 bg-pink-100 px-3 py-1 rounded-full shadow-sm">
+                        👇 กดที่ซองจดหมายเพื่ออ่านข้อความ
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= STEP 6: ENVELOPE & REQUEST PAGE ================= -->
+        <section id="page-6" class="page flex-col items-center justify-center text-center">
+            <div class="bg-white/90 backdrop-blur-md border-2 border-pink-200 rounded-3xl p-6 md:p-8 shadow-2xl w-full flex flex-col items-center">
                 
-                const randX = (Math.random() - 0.5) * 200;
-                const randY = Math.random() * 150 + 50;
-                const randDeg = (Math.random() - 0.5) * 90;
+                <!-- Video / GIF Banner -->
+                <div class="w-full h-48 md:h-56 bg-pink-100 rounded-2xl overflow-hidden mb-6 relative group border-2 border-pink-200 shadow-md">
+                    <img id="proposal-media" src="https://media.giphy.com/media/26BRv0Th43YwXJzwY/giphy.gif" alt="Love Animation" class="w-full h-full object-cover">
+                    <label class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex flex-col items-center justify-center text-white text-xs cursor-pointer">
+                        <i class="fa-solid fa-video text-xl mb-1"></i> เปลี่ยน GIF / รูปภาพ
+                        <input type="file" class="hidden" accept="image/*,video/*" onchange="previewMedia(event, 'proposal-media')">
+                    </label>
+                </div>
 
-                heart.style.setProperty('--rand-x', randX);
-                heart.style.setProperty('--rand-y', randY);
-                heart.style.setProperty('--rand-deg', randDeg + 'deg');
+                <!-- Main Proposal Text -->
+                <div class="bg-pink-50 border border-pink-200 rounded-2xl p-5 mb-6 text-left shadow-sm w-full">
+                    <p class="text-slate-800 text-sm md:text-base font-medium leading-relaxed mb-3">
+                        “เป็นแฟนกันนะงับที่รัก ขอบคุณที่อยู่ข้างกันมาตลอด ไม่ว่าจะเป็นวันที่ยิ้มง่ายหรือเหนื่อยมาก ทำให้ทุกวันมีความสุขมากๆงับ ขอให้เราจับมือกันไปแบบนี้ตลอดนะงับ รักมากๆนะงับ จุ้บๆๆๆๆๆ 😘”
+                    </p>
+                    <p class="text-love-deep font-bold text-xs md:text-sm text-center border-t border-pink-200 pt-3">
+                        “ถ้าเป็นไปได้…ขอให้เค้าไปอยู่ในใจเธอหน่อยนะงับ 💕”
+                    </p>
+                </div>
 
-                document.body.appendChild(heart);
-                setTimeout(() => heart.remove(), 2000);
-            }
-        }
+                <!-- Action Buttons -->
+                <div id="proposal-buttons-container" class="relative w-full min-h-[140px] flex flex-col sm:flex-row items-center justify-center gap-4 my-2">
+                    <button onclick="approveLove()" class="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-pink-500 to-love-deep text-white font-bold text-lg rounded-2xl shadow-xl hover:scale-105 transition active:scale-95 z-10 flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-heart"></i> อนุมัติให้เป็น "คนโปรด" ตลอดไป ✨
+                    </button>
 
-        // Audio Controls
+                    <button id="btn-friend" onmouseover="evadeMouse(this)" onclick="handleFriendClick()" class="w-full sm:w-auto px-6 py-3.5 bg-slate-200 text-slate-600 font-bold text-sm rounded-2xl shadow hover:bg-slate-300 transition-all z-10 sm:relative">
+                        ขอเป็นเพื่อนก่อนนะ 😅
+                    </button>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ================= STEP 7: FINAL APPROVED CERTIFICATE ================= -->
+        <section id="page-7" class="page flex-col items-center justify-center text-center">
+            <div id="certificate-card" class="bg-white border-4 border-pink-300 rounded-3xl p-6 md:p-8 shadow-2xl w-full flex flex-col items-center relative overflow-hidden">
+                
+                <!-- Stamp -->
+                <div class="absolute top-4 right-4 border-4 border-love-deep text-love-deep font-bold text-xs md:text-sm px-3 py-1 rounded-lg transform rotate-12 opacity-80 uppercase tracking-widest">
+                    APPROVED 💖
+                </div>
+
+                <div class="text-4xl mb-2">📜💍✨</div>
+                <h2 class="text-2xl md:text-3xl font-bold font-mitr text-love-deep mb-1">
+                    ใบอนุมัติความรัก 💖
+                </h2>
+                <p class="text-pink-600 font-semibold text-xs md:text-sm mb-6">
+                    "Approved อนุมัติให้ความรักนี้ … มีผลตลอดไปนะงับ 💕"
+                </p>
+
+                <!-- Certificate Photos -->
+                <div class="grid grid-cols-2 gap-4 w-full mb-6">
+                    <div class="relative group overflow-hidden rounded-2xl h-36 bg-pink-100 border-2 border-pink-200">
+                        <img id="cert-img-1" src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover">
+                        <label class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white text-xs cursor-pointer">
+                            <i class="fa-solid fa-camera mr-1"></i> เปลี่ยนรูป
+                            <input type="file" class="hidden" accept="image/*" onchange="previewImage(event, 'cert-img-1')">
+                        </label>
+                    </div>
+                    <div class="relative group overflow-hidden rounded-2xl h-36 bg-pink-100 border-2 border-pink-200">
+                        <img id="cert-img-2" src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover">
+                        <label class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white text-xs cursor-pointer">
+                            <i class="fa-solid fa-camera mr-1"></i> เปลี่ยนรูป
+                            <input type="file" class="hidden" accept="image/*" onchange="previewImage(event, 'cert-img-2')">
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Interactive Signature Area -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full mb-6 text-left">
+                    <!-- Signature 1 -->
+                    <div class="bg-pink-50/50 p-4 rounded-2xl border border-pink-200 flex flex-col items-center">
+                        <label class="text-xs font-bold text-pink-600 mb-2">ลายเซ็นคนเก่ง (ฝ่ายแรก) ✍️</label>
+                        <canvas id="sig-canvas-1" width="220" height="90" class="sig-pad w-full"></canvas>
+                        <button onclick="clearSignature('sig-canvas-1')" class="no-print mt-2 text-xs text-slate-400 hover:text-red-500 transition">
+                            <i class="fa-solid fa-eraser"></i> ลบลายเซ็น
+                        </button>
+                    </div>
+
+                    <!-- Signature 2 -->
+                    <div class="bg-pink-50/50 p-4 rounded-2xl border border-pink-200 flex flex-col items-center">
+                        <label class="text-xs font-bold text-pink-600 mb-2">ลายเซ็นคนน่ารัก (ฝ่ายที่สอง) ✍️</label>
+                        <canvas id="sig-canvas-2" width="220" height="90" class="sig-pad w-full"></canvas>
+                        <button onclick="clearSignature('sig-canvas-2')" class="no-print mt-2 text-xs text-slate-400 hover:text-red-500 transition">
+                            <i class="fa-solid fa-eraser"></i> ลบลายเซ็น
+                        </button>
+                    </div>
+                </div>
+
+                <div class="w-full text-center border-t border-pink-200 pt-4 mb-6">
+                    <p class="text-xs text-slate-500">วันที่อนุมัติความรัก: <span id="cert-date" class="font-bold text-pink-600"></span></p>
+                    <p class="text-xs text-slate-400 mt-1">สัญญาว่าดูแลและรักกันตลอดไป 💖</p>
+                </div>
+
+                <!-- Print & Home Controls -->
+                <div class="no-print flex flex-col sm:flex-row gap-3 w-full">
+                    <button onclick="window.print()" class="flex-1 py-3.5 bg-gradient-to-r from-pink-500 to-love-deep text-white font-bold rounded-xl shadow-lg hover:scale-102 transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-print"></i> บันทึก / ปริ้นท์ใบอนุมัติ (PDF) 🖨️
+                    </button>
+
+                    <button onclick="restartExperience()" class="px-6 py-3.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl shadow border border-pink-200 transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-house text-pink-500"></i> กลับหน้าแรก 🏠
+                    </button>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="no-print relative z-10 py-4 text-center text-xs text-pink-600 font-medium">
+        สร้างด้วยความรักทั้งหมดที่มี 💖
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        let loveProgress = 0;
+        let friendClickCount = 0;
+        let audioAutoplayStarted = false;
+
+        const friendErrorMessages = [
+            "ERROR!! ไม่พบคำตอบนี้ในระบบ ❌",
+            "ยังจะเลือกคำตอบนี้อีกหรอ 🙄",
+            "กำลังทดสอบระบบหรอจ๊ะ 🤔",
+            "ไม่ให้เลือกคำตอบนี้หรอกจ้ะ 😜",
+            "ถ้ายังเลือกอีกโดนแน่!! 😤",
+            "หน่ะ!! ยังจะเลือกอีก 😏",
+            "เตือนละนะ ⚠️",
+            "พอละหมดมุกละ ยอมผมเถอะครับ 🥺",
+            "ไปกดอนุมัติได้แล้วววว ❤️"
+        ];
+
+        // BGM Control
         function toggleAudio() {
             const audio = document.getElementById('bgm-audio');
             const icon = document.getElementById('bgm-icon');
-            const status = document.getElementById('bgm-status');
-            
-            if (audioPlaying) {
-                audio.pause();
-                icon.className = "fas fa-music-slash";
-                icon.classList.remove('animate-spin');
-                status.innerText = "เปิดเพลง";
-            } else {
+
+            if (audio.paused) {
                 audio.play().then(() => {
-                    icon.className = "fas fa-music animate-spin";
-                    status.innerText = "เพลงรักของเรา 💕";
-                }).catch(err => {
-                    console.log("Audio play blocked", err);
-                });
+                    icon.className = "fa-solid fa-music text-xs animate-spin";
+                }).catch(err => console.log("Audio play blocked", err));
+            } else {
+                audio.pause();
+                icon.className = "fa-solid fa-pause text-xs";
             }
-            audioPlaying = !audioPlaying;
         }
 
-        function loadCustomAudio(e) {
-            const file = e.target.files[0];
+        function playAudioOnFirstTouch() {
+            if (!audioAutoplayStarted) {
+                const audio = document.getElementById('bgm-audio');
+                audio.play().then(() => {
+                    audioAutoplayStarted = true;
+                    document.getElementById('bgm-icon').className = "fa-solid fa-music text-xs animate-spin";
+                }).catch(() => {});
+            }
+        }
+
+        function loadCustomAudio(event) {
+            const file = event.target.files[0];
             if (file) {
                 const audio = document.getElementById('bgm-audio');
                 audio.src = URL.createObjectURL(file);
-                audio.play();
-                audioPlaying = true;
-                document.getElementById('bgm-icon').className = "fas fa-music animate-spin";
-                document.getElementById('bgm-status').innerText = file.name.substring(0, 10) + '...';
+                audio.play().then(() => {
+                    audioAutoplayStarted = true;
+                    document.getElementById('bgm-icon').className = "fa-solid fa-music text-xs animate-spin";
+                });
             }
         }
 
-        // Interactive Photo Upload Handler
-        function handlePhotoUpload(event, imageKey, timelineIndex = null) {
-            event.stopPropagation();
+        // Clean Single-Page Display Navigation
+        function goToPage(pageNumber) {
+            document.querySelectorAll('.page').forEach(p => {
+                p.classList.remove('active');
+            });
+
+            const pageId = (pageNumber === 'loading') ? 'page-loading' : `page-${pageNumber}`;
+            const targetPage = document.getElementById(pageId);
+            
+            if (targetPage) {
+                targetPage.classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            if (pageNumber === 7) {
+                renderCertificateData();
+            }
+        }
+
+        function restartExperience() {
+            loveProgress = 0;
+            friendClickCount = 0;
+            document.getElementById('love-percent-text').innerText = '0%';
+            document.getElementById('love-progress-bar').style.width = '0%';
+            document.getElementById('heart-fill-mask').style.height = '0%';
+            goToPage(1);
+        }
+
+        function showModal(modalId) {
+            document.getElementById(modalId).classList.remove('hidden');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
+        }
+
+        // Step 1 Fill Love
+        function addLove() {
+            playAudioOnFirstTouch();
+
+            if (loveProgress >= 100) return;
+
+            loveProgress += 2;
+            if (loveProgress > 100) loveProgress = 100;
+
+            document.getElementById('love-percent-text').innerText = `${loveProgress}%`;
+            document.getElementById('love-progress-bar').style.width = `${loveProgress}%`;
+            document.getElementById('heart-fill-mask').style.height = `${loveProgress}%`;
+
+            if (loveProgress === 100) {
+                setTimeout(() => {
+                    goToPage('loading');
+                    setTimeout(() => {
+                        goToPage(2);
+                    }, 2000);
+                }, 400);
+            }
+        }
+
+        // Step 2 Passcode
+        function checkPasscode() {
+            const val = document.getElementById('passcode-input').value.trim();
+            if (val.length > 0) {
+                showModal('passcode-modal');
+            } else {
+                alert('กรุณากรอกรหัสผ่านก่อนนะงับ 💖');
+            }
+        }
+
+        // Step 6 Evasive Button & Approval
+        function evadeMouse(btn) {
+            if (window.innerWidth > 640) {
+                const randomX = (Math.random() - 0.5) * 280;
+                const randomY = (Math.random() - 0.5) * 140;
+
+                btn.style.position = 'absolute';
+                btn.style.transform = `translate(${randomX}px, ${randomY}px)`;
+            }
+        }
+
+        function handleFriendClick() {
+            const msg = friendErrorMessages[Math.min(friendClickCount, friendErrorMessages.length - 1)];
+            alert(msg);
+            friendClickCount++;
+
+            const btn = document.getElementById('btn-friend');
+            const randomX = (Math.random() - 0.5) * 180;
+            const randomY = (Math.random() - 0.5) * 90;
+            btn.style.position = 'relative';
+            btn.style.left = `${randomX}px`;
+            btn.style.top = `${randomY}px`;
+        }
+
+        function approveLove() {
+            goToPage(7);
+        }
+
+        // Render Certificate Data
+        function renderCertificateData() {
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('th-TH', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            document.getElementById('cert-date').innerText = dateStr;
+
+            setTimeout(() => {
+                initCanvasSignature('sig-canvas-1');
+                initCanvasSignature('sig-canvas-2');
+            }, 100);
+        }
+
+        // Image & Media Previews
+        function previewImage(event, targetId) {
             const file = event.target.files[0];
             if (file) {
-                const newUrl = URL.createObjectURL(file);
-                if (timelineIndex !== null) {
-                    appImages.timeline[timelineIndex] = newUrl;
-                } else {
-                    appImages[imageKey] = newUrl;
-                }
-                renderScreen();
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById(targetId).src = e.target.result;
+                };
+                reader.readAsDataURL(file);
             }
         }
 
-        // Step Router & Render Engine
-        function renderScreen() {
-            const container = document.getElementById('app-container');
-            container.innerHTML = '';
-
-            switch (currentStep) {
-                case 1:
-                    renderStep1(container);
-                    break;
-                case 2:
-                    renderStep2(container);
-                    break;
-                case 3:
-                    renderStep3(container);
-                    break;
-                case 4:
-                    renderStep4(container);
-                    break;
-                case 5:
-                    renderStep5(container);
-                    break;
-                case 6:
-                    renderStep6(container);
-                    break;
-                case 7:
-                    renderStep7(container);
-                    break;
+        function previewMedia(event, targetId) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById(targetId).src = e.target.result;
+                };
+                reader.readAsDataURL(file);
             }
         }
 
-        // Step 1: Heart Fill Interactive Screen
-        function renderStep1(container) {
-            container.innerHTML = `
-                <div class="glass-card rounded-3xl p-8 text-center shadow-xl border-4 border-pink-200">
-                    <div class="inline-block bg-pink-100 text-pink-600 px-4 py-1.5 rounded-full text-xs font-semibold mb-4 animate-bounce">
-                        💖 แตะหน้าจอตรงไหนก็ได้เพื่อเติมความรัก 💖
-                    </div>
-                    <h1 class="text-2xl font-bold text-pink-600 mb-2">เติมความรักให้เต็มหัวใจนะงับ</h1>
-                    <p class="text-gray-500 text-sm mb-6">จิ้ม 1 ครั้ง เพิ่มความรัก 2 ส่วน 💕</p>
+        // Canvas Signatures
+        function initCanvasSignature(canvasId) {
+            const canvas = document.getElementById(canvasId);
+            if (!canvas || canvas.dataset.initialized) return;
+            canvas.dataset.initialized = "true";
 
-                    <!-- Big Interactive Heart Container -->
-                    <div class="relative w-48 h-48 mx-auto my-6 cursor-pointer transform hover:scale-105 transition" onclick="tapAddLove(event)">
-                        <!-- Background Heart (White/Pink Tint) -->
-                        <div class="absolute inset-0 bg-white border-4 border-pink-300 rounded-full shadow-inner flex items-center justify-center">
-                            <i class="fas fa-heart text-pink-100 text-9xl"></i>
-                        </div>
-                        
-                        <!-- Filling Pink Heart Layer -->
-                        <div id="heart-fill-layer" class="absolute inset-0 bg-gradient-to-t from-pink-500 to-rose-400 rounded-full transition-all duration-300 flex items-center justify-center overflow-hidden" style="height: ${heartLoveFill}%; top: ${100 - heartLoveFill}%;">
-                            <i class="fas fa-heart text-white text-9xl absolute bottom-0"></i>
-                        </div>
+            const ctx = canvas.getContext('2d');
+            ctx.strokeStyle = '#FF0B55';
+            ctx.lineWidth = 2.5;
+            ctx.lineCap = 'round';
 
-                        <!-- Progress Text Overlay -->
-                        <div class="absolute inset-0 flex flex-col items-center justify-center text-pink-600 font-extrabold text-2xl drop-shadow-md pointer-events-none">
-                            <span>${heartLoveFill}%</span>
-                            <span class="text-xs font-normal text-pink-500">Love Level</span>
-                        </div>
-                    </div>
+            let isDrawing = false;
+            let lastX = 0;
+            let lastY = 0;
 
-                    <!-- Progress Bar -->
-                    <div class="w-full bg-pink-100 rounded-full h-4 mb-4 overflow-hidden border border-pink-200 shadow-inner">
-                        <div class="bg-gradient-to-r from-pink-400 to-rose-500 h-full transition-all duration-300" style="width: ${heartLoveFill}%"></div>
-                    </div>
-                    <p class="text-xs text-pink-400 font-medium">กดสะสมให้ครบ 100% เพื่อไปต่อหน้านะงับ 💕</p>
-                </div>
-            `;
+            function getPos(e) {
+                const rect = canvas.getBoundingClientRect();
+                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+                return {
+                    x: clientX - rect.left,
+                    y: clientY - rect.top
+                };
+            }
+
+            function startDraw(e) {
+                isDrawing = true;
+                const pos = getPos(e);
+                lastX = pos.x;
+                lastY = pos.y;
+            }
+
+            function draw(e) {
+                if (!isDrawing) return;
+                e.preventDefault();
+                const pos = getPos(e);
+                ctx.beginPath();
+                ctx.moveTo(lastX, lastY);
+                ctx.lineTo(pos.x, pos.y);
+                ctx.stroke();
+                lastX = pos.x;
+                lastY = pos.y;
+            }
+
+            function stopDraw() {
+                isDrawing = false;
+            }
+
+            canvas.addEventListener('mousedown', startDraw);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseup', stopDraw);
+            canvas.addEventListener('mouseleave', stopDraw);
+
+            canvas.addEventListener('touchstart', startDraw);
+            canvas.addEventListener('touchmove', draw);
+            canvas.addEventListener('touchend', stopDraw);
         }
 
-        function tapAddLove(e) {
-            if (heartLoveFill < 100) {
-                heartLoveFill = Math.min(100, heartLoveFill + 2);
-                renderStep1(document.getElementById('app-container'));
-                if (heartLoveFill >= 100) {
+        function clearSignature(canvasId) {
+            const canvas = document.getElementById(canvasId);
+            if (canvas) {
+                const ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
+        }
+
+        // Floating Heart Particles
+        const heartEmojis = ['💖', '💕', '💗', '🌸', '✨', '🌹', '❤️'];
+
+        function createHeartParticle(x, y) {
+            const particle = document.createElement('div');
+            particle.className = 'heart-particle';
+            particle.innerText = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+            
+            const dx = (Math.random() - 0.5) * 120;
+            const dy = (Math.random() - 0.5) * 60;
+            const rot = (Math.random() - 0.5) * 90;
+
+            particle.style.left = `${x}px`;
+            particle.style.top = `${y}px`;
+            particle.style.setProperty('--dx', dx);
+            particle.style.setProperty('--dy', dy);
+            particle.style.setProperty('--rot', `${rot}deg`);
+
+            document.body.appendChild(particle);
+
+            setTimeout(() => {
+                particle.remove();
+            }, 1800);
+        }
+
+        window.addEventListener('click', function(e) {
+            const count = Math.floor(Math.random() * 3) + 3;
+            for (let i = 0; i < count; i++) {
+                setTimeout(() => {
+                    createHeartParticle(e.clientX, e.clientY);
+                }, i * 60);
+            }
+        });
+
+        window.addEventListener('touchstart', function(e) {
+            if (e.touches.length > 0) {
+                const touch = e.touches[0];
+                const count = Math.floor(Math.random() * 3) + 3;
+                for (let i = 0; i < count; i++) {
                     setTimeout(() => {
-                        showModal("🎉 ความรักเต็ม 100% แล้ว!", "กำลังพาไปหน้าใส่รหัสลับหัวใจนะงับ...", "เข้าสู่หน้าถัดไป 💕", () => {
-                            currentStep = 2;
-                            renderScreen();
-                        });
-                    }, 300);
+                        createHeartParticle(touch.clientX, touch.clientY);
+                    }, i * 60);
                 }
             }
-        }
+        }, { passive: true });
 
-        // Step 2: Passcode & Polaroid Screen
-        function renderStep2(container) {
-            container.innerHTML = `
-                <div class="glass-card rounded-3xl p-6 shadow-xl border-4 border-pink-200">
-                    <h2 class="text-2xl font-bold text-center text-pink-600 mb-4">🔐 รหัสลับหัวใจ</h2>
-                    
-                    <div class="flex flex-col md:flex-row items-center gap-6 my-4">
-                        <!-- Polaroid Frame -->
-                        <div class="relative group bg-white p-3 pb-8 shadow-md rounded-lg transform -rotate-2 hover:rotate-0 transition border border-gray-200 w-48 flex-shrink-0">
-                            <div class="relative w-full h-48 bg-pink-50 rounded overflow-hidden flex items-center justify-center">
-                                <img src="${appImages.polaroid}" onerror="handleImgError(this, 'polaroid')" class="w-full h-full object-cover">
-                                <label class="absolute inset-0 bg-black/40 text-white opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center transition cursor-pointer text-xs">
-                                    <i class="fas fa-camera text-xl mb-1"></i>
-                                    <span>อัปโหลดรูปภาพ</span>
-                                    <input type="file" accept="image/*" class="hidden" onchange="handlePhotoUpload(event, 'polaroid')">
-                                </label>
-                            </div>
-                            <p class="text-center font-handwriting text-pink-500 mt-2 text-sm">รูปของเรา 💕</p>
-                        </div>
-
-                        <!-- Passcode Form -->
-                        <div class="flex-1 w-full">
-                            <div class="bg-pink-50 p-4 rounded-2xl border border-pink-200 mb-4 text-center">
-                                <span class="text-xs font-semibold text-pink-500 uppercase tracking-wider">💡 คำใบ้รหัสผ่าน</span>
-                                <p class="text-pink-700 font-bold text-lg mt-0.5">“วันเกิดของคุณ (DDMMหรือDDMMYYYY)”</p>
-                            </div>
-                            
-                            <div class="mb-4">
-                                <input type="password" id="passcode-input" placeholder="กรอกรหัสผ่าน..." class="w-full px-4 py-3 rounded-full border-2 border-pink-300 focus:border-rose-500 focus:outline-none text-center text-lg tracking-widest text-pink-600 font-bold shadow-inner">
-                            </div>
-                            <button onclick="checkPasscode()" class="w-full py-3 bg-gradient-to-r from-pink-400 to-rose-500 text-white font-bold rounded-full shadow-lg hover:from-pink-500 hover:to-rose-600 transition flex items-center justify-center gap-2">
-                                <i class="fas fa-key"></i> ยืนยันรหัสผ่าน
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-
-        function checkPasscode() {
-            const input = document.getElementById('passcode-input').value.trim();
-            if (input !== "") {
-                showModal("✨ รหัสผ่านถูกต้อง!", "รหัสผ่านถูกต้อง ที่รักเก่งที่สุดเลยค้าบ 💖", "ไปดู Gallery ความรักกันเลย 🎉", () => {
-                    currentStep = 3;
-                    renderScreen();
-                });
-            } else {
-                showModal("❌ รหัสผ่านไม่ถูกต้อง", "ลองใส่วันเกิดของคุณดูใหม่อีกครั้งนะงับ 🥺", "ลองอีกครั้ง");
-            }
-        }
-
-        // Step 3: Love Timeline Gallery Screen
-        function renderStep3(container) {
-            const timelineData = [
-                { title: "วันแรกที่เราเริ่มคุยกัน 💬", desc: "เขินสุดๆ ไม่รู้จะชวนคุยยังไงดี" },
-                { title: "เดตแรกของเรา ☕", desc: "ตื่นเต้นจนหัวใจเต้นแรงมาก" },
-                { title: "ทริปแรกด้วยกัน 🚗", desc: "รอยยิ้มของคุณทำให้โลกสดใส" },
-                { title: "คอยดูแลเค้าเสมอ 🥪", desc: "ขอบคุณเรื่องราวดีๆ ในทุกๆ วัน" },
-                { title: "จนถึงวันนี้ ❤️", desc: "ความรู้สึกยิ่งชัดเจนขึ้นเรื่อยๆ" }
-            ];
-
-            let cardsHtml = timelineData.map((item, idx) => `
-                <div class="flex-shrink-0 w-64 bg-white rounded-2xl p-3 shadow-md border border-pink-200 flex flex-col items-center">
-                    <div class="relative group w-full h-44 bg-pink-50 rounded-xl overflow-hidden mb-3">
-                        <img src="${appImages.timeline[idx]}" onerror="handleImgError(this, 'timeline', ${idx})" class="w-full h-full object-cover">
-                        <label class="absolute inset-0 bg-black/40 text-white opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center transition cursor-pointer text-xs">
-                            <i class="fas fa-camera text-lg mb-1"></i>
-                            <span>เปลี่ยนรูปที่ ${idx+1}</span>
-                            <input type="file" accept="image/*" class="hidden" onchange="handlePhotoUpload(event, 'timeline', ${idx})">
-                        </label>
-                    </div>
-                    <span class="text-xs font-bold bg-pink-100 text-pink-600 px-2.5 py-0.5 rounded-full mb-1">Step ${idx+1}</span>
-                    <h4 class="font-bold text-pink-600 text-sm mb-1 text-center">${item.title}</h4>
-                    <p class="text-xs text-gray-500 text-center">${item.desc}</p>
-                </div>
-            `).join('');
-
-            container.innerHTML = `
-                <div class="glass-card rounded-3xl p-6 shadow-xl border-4 border-pink-200">
-                    <h2 class="text-2xl font-bold text-center text-pink-600 mb-1">📖 ความรักของเราสองคน</h2>
-                    <p class="text-center text-xs text-gray-500 mb-4">เลื่อนดูความทรงจำดีๆ ที่ผ่านมางับ 👉</p>
-
-                    <!-- Horizontal Scroll Gallery -->
-                    <div class="flex gap-4 overflow-x-auto pb-4 custom-scrollbar mb-4">
-                        ${cardsHtml}
-                    </div>
-
-                    <button onclick="triggerTimelineFinish()" class="w-full py-3 bg-gradient-to-r from-pink-400 to-rose-500 text-white font-bold rounded-full shadow-lg hover:from-pink-500 hover:to-rose-600 transition flex items-center justify-center gap-2">
-                        ดูจบแล้วงับ 💕
-                    </button>
-                </div>
-            `;
-        }
-
-        function triggerTimelineFinish() {
-            showModal("💻 มีการแจ้งเตือนใหม่!", "เริ่มมีใจหรือยังจ๊ะ? 😉✨", "ไปกันต่อ 👉", () => {
-                currentStep = 4;
-                renderScreen();
-            });
-        }
-
-        // Step 4: Interactive Question (Love me?)
-        function renderStep4(container) {
-            container.innerHTML = `
-                <div class="glass-card rounded-3xl p-6 text-center shadow-xl border-4 border-pink-200 relative">
-                    <div class="relative group w-48 h-48 mx-auto mb-4 rounded-2xl overflow-hidden shadow-md border-2 border-pink-300">
-                        <img src="${appImages.question}" onerror="handleImgError(this, 'question')" class="w-full h-full object-cover">
-                        <label class="absolute inset-0 bg-black/40 text-white opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center transition cursor-pointer text-xs">
-                            <i class="fas fa-camera text-lg mb-1"></i>
-                            <span>เปลี่ยนรูป</span>
-                            <input type="file" accept="image/*" class="hidden" onchange="handlePhotoUpload(event, 'question')">
-                        </label>
-                    </div>
-
-                    <h2 class="text-2xl font-extrabold text-pink-600 mb-6">HEY BABY รักเค้ามั้ยงับ? 🥺💖</h2>
-
-                    <div class="flex items-center justify-center gap-6">
-                        <!-- Yes Button -->
-                        <button onclick="handleLoveYes()" class="px-6 py-3 bg-rose-500 hover:bg-rose-600 text-white font-bold rounded-full shadow-lg transform hover:scale-110 transition flex items-center gap-2">
-                            <i class="fas fa-heart text-xl"></i> รักสิคะ 💕
-                        </button>
-
-                        <!-- No Button -->
-                        <button onclick="handleLoveNo()" class="px-5 py-3 bg-gray-300 hover:bg-gray-400 text-gray-700 font-bold rounded-full shadow transition flex items-center gap-2">
-                            <i class="fas fa-times text-lg"></i> ไม่รัก 💔
-                        </button>
-                    </div>
-                </div>
-            `;
-        }
-
-        function handleLoveNo() {
-            showModal("🥺 ไม่รักเค้าจริงหรอ?", "เค้าไม่น่ารักตรงไหนงับ... ไหนบอกมาสิ 💔", "ย้อนกลับไปตอบ
+    </script>
+</body>
+</html>
