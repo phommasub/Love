@@ -242,7 +242,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center w-full mb-6">
                     <div class="flex flex-col items-center">
                         <div class="polaroid w-52 relative group">
-                            <img id="passcode-img" src="images/polaroid.jpg" onerror="this.src='https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=600&q=80'" alt="Love Frame" class="w-full h-48 object-contain rounded">
+                            <img id="passcode-img" src="images/polaroid.jpg" onerror="this.src='https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=600&q=80'" alt="Love Frame" class="w-full h-48 object-cover rounded">
                             <p class="text-center text-slate-700 font-mitr mt-3 text-sm">เจ้าความรัก 🌸</p>
                             
                             <label class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-white text-xs cursor-pointer rounded p-2">
@@ -423,7 +423,7 @@
         <section id="page-4" class="page flex-col items-center justify-center text-center">
             <div class="bg-white/85 backdrop-blur-md border-2 border-pink-200 rounded-3xl p-6 md:p-8 shadow-2xl w-full flex flex-col items-center">
                 <div class="relative mb-4 w-60 h-60 rounded-3xl overflow-hidden border-4 border-pink-300 shadow-lg group">
-                    <img id="q-img" src="images/question.jpg" onerror="this.src='https://images.unsplash.com/photo-1518895949257-7621c3c786d7?auto=format&fit=crop&w=600&q=80'" class="w-full h-full object-contain">
+                    <img id="q-img" src="images/question.jpg" onerror="this.src='https://images.unsplash.com/photo-1518895949257-7621c3c786d7?auto=format&fit=crop&w=600&q=80'" class="w-full h-full object-cover">
                     <label class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex flex-col items-center justify-center text-white text-xs cursor-pointer">
                         <i class="fa-solid fa-camera text-xl mb-1"></i> เปลี่ยนรูป
                         <input type="file" class="hidden" accept="image/*" onchange="previewImage(event, 'q-img')">
@@ -471,7 +471,7 @@
                 </p>
 
                 <div class="relative w-56 h-56 md:w-64 md:h-64 my-2 flex items-center justify-center">
-                    <img id="bouquet-img" src="images/bouquet.webp" onerror="this.src='https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=600&q=80'" class="w-full h-full object-contain rounded-3xl shadow-xl border-4 border-pink-200">
+                    <img id="bouquet-img" src="images/bouquet.webp" onerror="this.src='https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=600&q=80'" class="w-full h-full object-cover rounded-3xl shadow-xl border-4 border-pink-200">
                     <label class="absolute inset-0 bg-black/40 opacity-0 hover:opacity-100 transition flex flex-col items-center justify-center text-white text-xs cursor-pointer rounded-3xl">
                         <i class="fa-solid fa-camera text-2xl mb-1"></i> เปลี่ยนรูปช่อดอกไม้
                         <input type="file" class="hidden" accept="image/*" onchange="previewImage(event, 'bouquet-img')">
@@ -499,11 +499,11 @@
                 
                 <!-- Video / GIF Banner -->
                 <div class="w-full h-48 md:h-56 bg-pink-100 rounded-2xl overflow-hidden mb-6 relative group border-2 border-pink-200 shadow-md">
-                    <video id="proposal-media-video" autoplay loop muted playsinline class="w-full h-full object-contain">
+                    <video id="proposal-media-video" autoplay loop muted playsinline class="w-full h-full object-cover">
                         <source src="images/proposal.MOV" type="video/mp4">
                         <source src="images/proposal.MOV" type="video/quicktime">
                     </video>
-                    <img id="proposal-media-img" src="images/proposal.gif" onerror="this.style.display='none'" class="hidden w-full h-full object-contain">
+                    <img id="proposal-media-img" src="images/proposal.gif" onerror="this.style.display='none'" class="hidden w-full h-full object-cover">
                     <label class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex flex-col items-center justify-center text-white text-xs cursor-pointer">
                         <i class="fa-solid fa-video text-xl mb-1"></i> เปลี่ยน GIF / วิดีโอ
                         <input type="file" class="hidden" accept="image/*,video/*" onchange="previewMedia(event, 'proposal-media-video')">
@@ -552,16 +552,16 @@
                 </p>
 
                 <!-- Certificate Photos -->
-                <div class="grid grid-cols-2 gap-4 w-full mb-6">
-                    <div class="relative group overflow-hidden rounded-2xl h-36 bg-pink-100 border-2 border-pink-200">
-                        <img id="cert-img-1" src="images/cert-1.JPG" onerror="this.src='https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=600&q=80'" class="w-full h-full object-contain">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full mb-6">
+                    <div class="relative group overflow-hidden rounded-2xl w-full max-w-xs h-80 md:h-96 mx-auto bg-pink-100 border-2 border-pink-200 shadow-sm">
+                        <img id="cert-img-1" src="images/cert-1.JPG" onerror="this.src='https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=600&q=80'" class="w-full h-full object-cover object-center">
                         <label class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white text-xs cursor-pointer">
                             <i class="fa-solid fa-camera mr-1"></i> เปลี่ยนรูป
                             <input type="file" class="hidden" accept="image/*" onchange="previewImage(event, 'cert-img-1')">
                         </label>
                     </div>
-                    <div class="relative group overflow-hidden rounded-2xl h-36 bg-pink-100 border-2 border-pink-200">
-                        <img id="cert-img-2" src="images/cert-2.JPG" onerror="this.src='https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=600&q=80'" class="w-full h-full object-contain">
+                    <div class="relative group overflow-hidden rounded-2xl w-full max-w-xs h-80 md:h-96 mx-auto bg-pink-100 border-2 border-pink-200 shadow-sm">
+                        <img id="cert-img-2" src="images/cert-2.JPG" onerror="this.src='https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=600&q=80'" class="w-full h-full object-cover object-center">
                         <label class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white text-xs cursor-pointer">
                             <i class="fa-solid fa-camera mr-1"></i> เปลี่ยนรูป
                             <input type="file" class="hidden" accept="image/*" onchange="previewImage(event, 'cert-img-2')">
