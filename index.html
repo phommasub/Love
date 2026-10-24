@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> PLEASE!!!! 💖</title>
+    <title>Please!! 💖</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
@@ -82,7 +82,7 @@
         /* Polaroid Photo Frame Effect */
         .polaroid {
             background: white;
-            padding: 16px 16px 32px 16px;
+            padding: 12px 12px 24px 12px;
             box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
             transform: rotate(-2deg);
             transition: all 0.3s ease;
@@ -150,6 +150,7 @@
     <div class="fixed top-4 right-4 z-50 flex items-center gap-2 bg-white/80 backdrop-blur-md border border-pink-300 rounded-full px-3 py-1.5 shadow-lg no-print">
         <audio id="bgm-audio" loop preload="auto">
             <source src="images/bgm.mp3" type="audio/mpeg">
+            <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=romantic-love-112188.mp3" type="audio/mpeg">
         </audio>
         
         <button id="bgm-toggle-btn" onclick="toggleAudio()" class="w-8 h-8 rounded-full bg-pink-500 hover:bg-pink-600 text-white flex items-center justify-center transition shadow">
@@ -240,8 +241,8 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center w-full mb-6">
                     <div class="flex flex-col items-center">
-                        <div class="polaroid w-64 md:w-72 relative group">
-                            <img id="passcode-img" src="images/polaroid.jpg" onerror="handleImageError(this, 'https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80')" alt="Love Frame" class="w-full h-60 object-cover rounded">
+                        <div class="polaroid w-52 relative group">
+                            <img id="passcode-img" src="images/polaroid.jpg" onerror="this.src='https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=600&q=80'" alt="Love Frame" class="w-full h-48 object-cover rounded">
                             <p class="text-center text-slate-700 font-mitr mt-3 text-sm">เจ้าความรัก 🌸</p>
                             
                             <label class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-white text-xs cursor-pointer rounded p-2">
@@ -255,7 +256,7 @@
                     <div class="flex flex-col items-center md:items-start w-full">
                         <div class="bg-pink-50/80 border border-pink-200 rounded-2xl p-4 w-full text-center md:text-left mb-4">
                             <p class="text-xs text-pink-600 font-semibold mb-1">💡 คำใบ้รหัสผ่าน:</p>
-                            <p class="text-sm text-slate-700 font-medium">“วันเกิดของคุณ (หรือรหัสผ่าน: DDMM)”</p>
+                            <p class="text-sm text-slate-700 font-medium">“วันเกิดของคุณ (DDMM)”</p>
                         </div>
 
                         <label class="block text-xs font-medium text-slate-500 mb-1">ป้อนรหัสผ่าน 4 หลัก:</label>
@@ -290,46 +291,46 @@
                 <h2 class="text-2xl md:text-3xl font-bold font-mitr text-love-deep mt-2 mb-1">ความทรงจำของเรา 💕</h2>
                 <p class="text-slate-600 text-xs md:text-sm mb-6">เรื่องราวความรักตั้งแต่เริ่มคุยกันมางับ</p>
 
-                <div class="relative border-l-2 border-pink-300 ml-2 md:ml-28 space-y-8 my-6 text-left">
+                <div class="relative border-l-2 border-pink-300 ml-4 md:ml-32 space-y-8 my-6 text-left">
                     <!-- Item 1 -->
                     <div class="relative pl-6">
                         <div class="absolute -left-3 top-1 w-6 h-6 bg-love-deep rounded-full border-4 border-white shadow flex items-center justify-center text-white text-xs">1</div>
-                        <div class="bg-pink-50 border border-pink-200 rounded-2xl p-4 shadow-sm hover:shadow-md transition">
-                            <span class="text-xs font-bold text-pink-500">วันแรกที่เราได้เจอกัน 💬</span>
-                            <div class="my-3 relative group overflow-hidden rounded-2xl h-56 md:h-64 bg-pink-100 shadow-inner">
-                                <img id="timeline-1-img" src="images/timeline-1.jpg" onerror="handleImageError(this, 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=800&q=80')" class="w-full h-full object-cover">
+                        <div class="bg-pink-50 border border-pink-200 rounded-2xl p-3 md:p-4 shadow-sm hover:shadow-md transition">
+                            <span class="text-xs font-bold text-pink-500">วันแรกที่เราได้คุยกัน 💬</span>
+                            <div class="my-2 relative group overflow-hidden rounded-xl h-40 bg-pink-100">
+                                <img id="timeline-1-img" src="images/timeline-1.jpg" onerror="this.src='https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=600&q=80'" class="w-full h-full object-cover">
                                 <label class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white text-xs cursor-pointer">
                                     <i class="fa-solid fa-pen mr-1"></i> เปลี่ยนรูป
                                     <input type="file" class="hidden" accept="image/*" onchange="previewImage(event, 'timeline-1-img')">
                                 </label>
                             </div>
-                            <p class="text-xs md:text-sm text-slate-700">วันที่ตื่นเต้นที่สุด แต่ก็มีความสุขมากๆ เลยงับ 😊</p>
+                            <p class="text-xs md:text-sm text-slate-700">จุดเริ่มต้นของความรู้สึกดีๆ ที่มีให้กันทุกวัน 😊</p>
                         </div>
                     </div>
 
                     <!-- Item 2 -->
                     <div class="relative pl-6">
                         <div class="absolute -left-3 top-1 w-6 h-6 bg-pink-400 rounded-full border-4 border-white shadow flex items-center justify-center text-white text-xs">2</div>
-                        <div class="bg-pink-50 border border-pink-200 rounded-2xl p-4 shadow-sm hover:shadow-md transition">
-                            <span class="text-xs font-bold text-pink-500">หนังเรื่องแรก 🎞️</span>
-                            <div class="my-3 relative group overflow-hidden rounded-2xl h-56 md:h-64 bg-pink-100 shadow-inner">
-                                <img id="timeline-2-img" src="images/timeline-2.jpg" onerror="handleImageError(this, 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=800&q=80')" class="w-full h-full object-cover">
+                        <div class="bg-pink-50 border border-pink-200 rounded-2xl p-3 md:p-4 shadow-sm hover:shadow-md transition">
+                            <span class="text-xs font-bold text-pink-500">เดตแรกและการเจอกัน ☕️</span>
+                            <div class="my-2 relative group overflow-hidden rounded-xl h-40 bg-pink-100">
+                                <img id="timeline-2-img" src="images/timeline-2.JPG" onerror="this.src='https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=600&q=80'" class="w-full h-full object-cover">
                                 <label class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white text-xs cursor-pointer">
                                     <i class="fa-solid fa-pen mr-1"></i> เปลี่ยนรูป
                                     <input type="file" class="hidden" accept="image/*" onchange="previewImage(event, 'timeline-2-img')">
                                 </label>
                             </div>
-                            <p class="text-xs md:text-sm text-slate-700">จุดเริ่มต้นของความรู้สึกดีๆ ที่มีให้กันทุกวัน ✨</p>
+                            <p class="text-xs md:text-sm text-slate-700">วันที่ตื่นเต้นที่สุด แต่ก็มีความสุขมากๆ เลยงับ ✨</p>
                         </div>
                     </div>
 
                     <!-- Item 3 -->
                     <div class="relative pl-6">
                         <div class="absolute -left-3 top-1 w-6 h-6 bg-love-deep rounded-full border-4 border-white shadow flex items-center justify-center text-white text-xs">3</div>
-                        <div class="bg-pink-50 border border-pink-200 rounded-2xl p-4 shadow-sm hover:shadow-md transition">
-                            <span class="text-xs font-bold text-pink-500">อยากมีเธอในทุกๆวัน 😄</span>
-                            <div class="my-3 relative group overflow-hidden rounded-2xl h-56 md:h-64 bg-pink-100 shadow-inner">
-                                <img id="timeline-3-img" src="images/timeline-3.jpg" onerror="handleImageError(this, 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=800&q=80')" class="w-full h-full object-cover">
+                        <div class="bg-pink-50 border border-pink-200 rounded-2xl p-3 md:p-4 shadow-sm hover:shadow-md transition">
+                            <span class="text-xs font-bold text-pink-500">รอยยิ้มของคุณที่ชอบที่สุด 😄</span>
+                            <div class="my-2 relative group overflow-hidden rounded-xl h-40 bg-pink-100">
+                                <img id="timeline-3-img" src="images/timeline-3.JPG" onerror="this.src='https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=600&q=80'" class="w-full h-full object-cover">
                                 <label class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white text-xs cursor-pointer">
                                     <i class="fa-solid fa-pen mr-1"></i> เปลี่ยนรูป
                                     <input type="file" class="hidden" accept="image/*" onchange="previewImage(event, 'timeline-3-img')">
@@ -342,10 +343,10 @@
                     <!-- Item 4 -->
                     <div class="relative pl-6">
                         <div class="absolute -left-3 top-1 w-6 h-6 bg-pink-400 rounded-full border-4 border-white shadow flex items-center justify-center text-white text-xs">4</div>
-                        <div class="bg-pink-50 border border-pink-200 rounded-2xl p-4 shadow-sm hover:shadow-md transition">
+                        <div class="bg-pink-50 border border-pink-200 rounded-2xl p-3 md:p-4 shadow-sm hover:shadow-md transition">
                             <span class="text-xs font-bold text-pink-500">ผ่านเรื่องราวไปด้วยกัน 🤝</span>
-                            <div class="my-3 relative group overflow-hidden rounded-2xl h-56 md:h-64 bg-pink-100 shadow-inner">
-                                <img id="timeline-4-img" src="images/timeline-4.jpg" onerror="handleImageError(this, 'https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80')" class="w-full h-full object-cover">
+                            <div class="my-2 relative group overflow-hidden rounded-xl h-40 bg-pink-100">
+                                <img id="timeline-4-img" src="images/timeline-4.JPG" onerror="this.src='https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=600&q=80'" class="w-full h-full object-cover">
                                 <label class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white text-xs cursor-pointer">
                                     <i class="fa-solid fa-pen mr-1"></i> เปลี่ยนรูป
                                     <input type="file" class="hidden" accept="image/*" onchange="previewImage(event, 'timeline-4-img')">
@@ -358,10 +359,10 @@
                     <!-- Item 5 -->
                     <div class="relative pl-6">
                         <div class="absolute -left-3 top-1 w-6 h-6 bg-love-deep rounded-full border-4 border-white shadow flex items-center justify-center text-white text-xs">5</div>
-                        <div class="bg-pink-50 border border-pink-200 rounded-2xl p-4 shadow-sm hover:shadow-md transition">
+                        <div class="bg-pink-50 border border-pink-200 rounded-2xl p-3 md:p-4 shadow-sm hover:shadow-md transition">
                             <span class="text-xs font-bold text-pink-500">ปัจจุบันและตลอดไป 💍</span>
-                            <div class="my-3 relative group overflow-hidden rounded-2xl h-56 md:h-64 bg-pink-100 shadow-inner">
-                                <img id="timeline-5-img" src="images/timeline-5.jpg" onerror="handleImageError(this, 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80')" class="w-full h-full object-cover">
+                            <div class="my-2 relative group overflow-hidden rounded-xl h-40 bg-pink-100">
+                                <img id="timeline-5-img" src="images/timeline-5.JPG" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80'" class="w-full h-full object-cover">
                                 <label class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white text-xs cursor-pointer">
                                     <i class="fa-solid fa-pen mr-1"></i> เปลี่ยนรูป
                                     <input type="file" class="hidden" accept="image/*" onchange="previewImage(event, 'timeline-5-img')">
@@ -374,10 +375,10 @@
                     <!-- Item 6 -->
                     <div class="relative pl-6">
                         <div class="absolute -left-3 top-1 w-6 h-6 bg-pink-400 rounded-full border-4 border-white shadow flex items-center justify-center text-white text-xs">6</div>
-                        <div class="bg-pink-50 border border-pink-200 rounded-2xl p-4 shadow-sm hover:shadow-md transition">
-                            <span class="text-xs font-bold text-pink-500">ร่วมสร้างอนาคตไปด้วยกันนะงับ ✨</span>
-                            <div class="my-3 relative group overflow-hidden rounded-2xl h-56 md:h-64 bg-pink-100 shadow-inner">
-                                <img id="timeline-6-img" src="images/timeline-6.jpg" onerror="handleImageError(this, 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80')" class="w-full h-full object-cover">
+                        <div class="bg-pink-50 border border-pink-200 rounded-2xl p-3 md:p-4 shadow-sm hover:shadow-md transition">
+                            <span class="text-xs font-bold text-pink-500">ร่วมสร้างอนาคตไปด้วยกัน ✨</span>
+                            <div class="my-2 relative group overflow-hidden rounded-xl h-40 bg-pink-100">
+                                <img id="timeline-6-img" src="images/timeline-6.jpg" onerror="this.src='https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&q=80'" class="w-full h-full object-cover">
                                 <label class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white text-xs cursor-pointer">
                                     <i class="fa-solid fa-pen mr-1"></i> เปลี่ยนรูป
                                     <input type="file" class="hidden" accept="image/*" onchange="previewImage(event, 'timeline-6-img')">
@@ -421,8 +422,8 @@
         <!-- ================= STEP 4: CUTE QUESTION ================= -->
         <section id="page-4" class="page flex-col items-center justify-center text-center">
             <div class="bg-white/85 backdrop-blur-md border-2 border-pink-200 rounded-3xl p-6 md:p-8 shadow-2xl w-full flex flex-col items-center">
-                <div class="relative mb-4 w-72 h-72 md:w-80 md:h-80 rounded-3xl overflow-hidden border-4 border-pink-300 shadow-lg group">
-                    <img id="q-img" src="images/question.jpg" onerror="handleImageError(this, 'https://images.unsplash.com/photo-1518895949257-7621c3c786d7?auto=format&fit=crop&w=800&q=80')" class="w-full h-full object-cover">
+                <div class="relative mb-4 w-60 h-60 rounded-3xl overflow-hidden border-4 border-pink-300 shadow-lg group">
+                    <img id="q-img" src="images/question.jpg" onerror="this.src='https://images.unsplash.com/photo-1518895949257-7621c3c786d7?auto=format&fit=crop&w=600&q=80'" class="w-full h-full object-cover">
                     <label class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex flex-col items-center justify-center text-white text-xs cursor-pointer">
                         <i class="fa-solid fa-camera text-xl mb-1"></i> เปลี่ยนรูป
                         <input type="file" class="hidden" accept="image/*" onchange="previewImage(event, 'q-img')">
@@ -469,8 +470,8 @@
                     เค้าให้ดอกไม้สำหรับคนสวยยยงับ 🌹✨
                 </p>
 
-                <div class="relative w-64 h-64 md:w-80 md:h-80 my-2 flex items-center justify-center">
-                    <img id="bouquet-img" src="images/bouquet.jpg" onerror="handleImageError(this, 'https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=800&q=80')" class="w-full h-full object-cover rounded-3xl shadow-xl border-4 border-pink-200">
+                <div class="relative w-56 h-56 md:w-64 md:h-64 my-2 flex items-center justify-center">
+                    <img id="bouquet-img" src="images/bouquet.webp" onerror="this.src='https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=600&q=80'" class="w-full h-full object-cover rounded-3xl shadow-xl border-4 border-pink-200">
                     <label class="absolute inset-0 bg-black/40 opacity-0 hover:opacity-100 transition flex flex-col items-center justify-center text-white text-xs cursor-pointer rounded-3xl">
                         <i class="fa-solid fa-camera text-2xl mb-1"></i> เปลี่ยนรูปช่อดอกไม้
                         <input type="file" class="hidden" accept="image/*" onchange="previewImage(event, 'bouquet-img')">
@@ -497,11 +498,15 @@
             <div class="bg-white/90 backdrop-blur-md border-2 border-pink-200 rounded-3xl p-6 md:p-8 shadow-2xl w-full flex flex-col items-center">
                 
                 <!-- Video / GIF Banner -->
-                <div class="w-full h-56 md:h-64 bg-pink-100 rounded-2xl overflow-hidden mb-6 relative group border-2 border-pink-200 shadow-md">
-                    <img id="proposal-media" src="images/proposal.gif" onerror="handleImageError(this, 'https://media.giphy.com/media/26BRv0Th43YwXJzwY/giphy.gif')" alt="Love Animation" class="w-full h-full object-cover">
+                <div class="w-full h-48 md:h-56 bg-pink-100 rounded-2xl overflow-hidden mb-6 relative group border-2 border-pink-200 shadow-md">
+                    <video id="proposal-media-video" autoplay loop muted playsinline class="w-full h-full object-cover">
+                        <source src="images/proposal.MOV" type="video/mp4">
+                        <source src="images/proposal.MOV" type="video/quicktime">
+                    </video>
+                    <img id="proposal-media-img" src="images/proposal.gif" onerror="this.style.display='none'" class="hidden w-full h-full object-cover">
                     <label class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex flex-col items-center justify-center text-white text-xs cursor-pointer">
-                        <i class="fa-solid fa-video text-xl mb-1"></i> เปลี่ยน GIF / รูปภาพ
-                        <input type="file" class="hidden" accept="image/*,video/*" onchange="previewMedia(event, 'proposal-media')">
+                        <i class="fa-solid fa-video text-xl mb-1"></i> เปลี่ยน GIF / วิดีโอ
+                        <input type="file" class="hidden" accept="image/*,video/*" onchange="previewMedia(event, 'proposal-media-video')">
                     </label>
                 </div>
 
@@ -548,15 +553,15 @@
 
                 <!-- Certificate Photos -->
                 <div class="grid grid-cols-2 gap-4 w-full mb-6">
-                    <div class="relative group overflow-hidden rounded-2xl h-44 bg-pink-100 border-2 border-pink-200">
-                        <img id="cert-img-1" src="images/cert-1.jpg" onerror="handleImageError(this, 'https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80')" class="w-full h-full object-cover">
+                    <div class="relative group overflow-hidden rounded-2xl h-36 bg-pink-100 border-2 border-pink-200">
+                        <img id="cert-img-1" src="images/cert-1.JPG" onerror="this.src='https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=600&q=80'" class="w-full h-full object-cover">
                         <label class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white text-xs cursor-pointer">
                             <i class="fa-solid fa-camera mr-1"></i> เปลี่ยนรูป
                             <input type="file" class="hidden" accept="image/*" onchange="previewImage(event, 'cert-img-1')">
                         </label>
                     </div>
-                    <div class="relative group overflow-hidden rounded-2xl h-44 bg-pink-100 border-2 border-pink-200">
-                        <img id="cert-img-2" src="images/cert-2.jpg" onerror="handleImageError(this, 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=800&q=80')" class="w-full h-full object-cover">
+                    <div class="relative group overflow-hidden rounded-2xl h-36 bg-pink-100 border-2 border-pink-200">
+                        <img id="cert-img-2" src="images/cert-2.JPG" onerror="this.src='https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=600&q=80'" class="w-full h-full object-cover">
                         <label class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white text-xs cursor-pointer">
                             <i class="fa-solid fa-camera mr-1"></i> เปลี่ยนรูป
                             <input type="file" class="hidden" accept="image/*" onchange="previewImage(event, 'cert-img-2')">
@@ -568,7 +573,7 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full mb-6 text-left">
                     <!-- Signature 1 -->
                     <div class="bg-pink-50/50 p-4 rounded-2xl border border-pink-200 flex flex-col items-center">
-                        <label class="text-xs font-bold text-pink-600 mb-2">ลายเซ็นคนเก่ง (ฝ่ายแรก) ✍️</label>
+                        <label class="text-xs font-bold text-pink-600 mb-2">ลายเซ็นคนเก่ง (เค้าเอง) ✍️</label>
                         <canvas id="sig-canvas-1" width="220" height="90" class="sig-pad w-full"></canvas>
                         <button onclick="clearSignature('sig-canvas-1')" class="no-print mt-2 text-xs text-slate-400 hover:text-red-500 transition">
                             <i class="fa-solid fa-eraser"></i> ลบลายเซ็น
@@ -577,7 +582,7 @@
 
                     <!-- Signature 2 -->
                     <div class="bg-pink-50/50 p-4 rounded-2xl border border-pink-200 flex flex-col items-center">
-                        <label class="text-xs font-bold text-pink-600 mb-2">ลายเซ็นคนน่ารัก (ฝ่ายที่สอง) ✍️</label>
+                        <label class="text-xs font-bold text-pink-600 mb-2">ลายเซ็นคนน่ารัก (เธอ) ✍️</label>
                         <canvas id="sig-canvas-2" width="220" height="90" class="sig-pad w-full"></canvas>
                         <button onclick="clearSignature('sig-canvas-2')" class="no-print mt-2 text-xs text-slate-400 hover:text-red-500 transition">
                             <i class="fa-solid fa-eraser"></i> ลบลายเซ็น
@@ -627,12 +632,6 @@
             "พอละหมดมุกละ ยอมผมเถอะครับ 🥺",
             "ไปกดอนุมัติได้แล้วววว ❤️"
         ];
-
-        // Robust Image Error Handling to Prevent Blank Images
-        function handleImageError(imgElement, fallbackUrl) {
-            imgElement.onerror = null;
-            imgElement.src = fallbackUrl;
-        }
 
         // BGM Control
         function toggleAudio() {
@@ -801,7 +800,13 @@
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    document.getElementById(targetId).src = e.target.result;
+                    const el = document.getElementById(targetId);
+                    if (el && el.tagName.toLowerCase() === 'video') {
+                        el.src = e.target.result;
+                        el.play();
+                    } else if (el) {
+                        el.src = e.target.result;
+                    }
                 };
                 reader.readAsDataURL(file);
             }
